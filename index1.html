@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ICU</title>
+    <style>
+        #remote {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            transform: rotateY(180deg);
+        }
+
+        #local {
+            position: fixed;
+            bottom: 100px;
+            right: 100px;
+            height: 100px;
+            width: 100px;
+            transform: rotateY(180deg);
+        }
+    </style>
+    <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+</head>
+<body>
+
+    <video id="remote"></video>
+    <video id="local" muted></video>
+
+    <script>
+        var peer = new Peer('1',{key: 'o39izsa6mb3jif6r'});
+
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        navigator.getUserMedia({video: true, audio: true}, function(stream) {
+            var call = peer.call('2', stream);
+            var lvideo = document.querySelector('#local');
+            lvideo.src = window.URL.createObjectURL(stream);
+            lvideo.onloadedmetadata = function(e) {
+                lvideo.play();
+            };
+            call.on('stream', function(remoteStream) {
+                var video = document.querySelector('#remote');
+                video.src = window.URL.createObjectURL(remoteStream);
+                video.onloadedmetadata = function(e) {
+                    video.play();
+                };
+            });
+        }, function(err) {
+            console.log('Failed to get local stream' ,err);
+        });
+
+        peer.on('call', function(call) {
+            navigator.getUserMedia({video: true, audio: true}, function(stream) {
+                call.answer(stream); // Answer the call with an A/V stream.
+                call.on('stream', function(remoteStream) {
+                    var video = document.querySelector('#remote');
+                    video.src = window.URL.createObjectURL(remoteStream);
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
+                });
+            }, function(err) {
+                console.log('Failed to get local stream' ,err);
+            });
+        });
+    </script>
+</body>
+</html>
