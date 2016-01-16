@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(process.env.PORT || 8086);
+server.listen(process.env.PORT || 80);
 
 io.peers=[];
 
