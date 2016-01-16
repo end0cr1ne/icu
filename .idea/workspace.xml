@@ -4,8 +4,6 @@
     <list default="true" id="053ecd89-c9f5-41da-95cf-ae99f27a6c81" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/icu-app.html" afterPath="$PROJECT_DIR$/app/icu-app.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="ICU.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,8 +47,8 @@
       <file leaf-file-name="icu-app.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/icu-app.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58760107">
-              <caret line="91" column="56" selection-start-line="91" selection-start-column="56" selection-end-line="91" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.27493262">
+              <caret line="91" column="59" selection-start-line="91" selection-start-column="59" selection-end-line="91" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -385,8 +383,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/icu-app.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58760107">
-          <caret line="91" column="56" selection-start-line="91" selection-start-column="56" selection-end-line="91" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.27493262">
+          <caret line="91" column="59" selection-start-line="91" selection-start-column="59" selection-end-line="91" selection-end-column="59" />
           <folding />
         </state>
       </provider>

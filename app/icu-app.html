@@ -87,9 +87,9 @@
                 this.peers=[];
 
                 socket.on('setup',function(port){
-                    console.log(port);
+                    console.log(port,location.host);
                 });
-                self.peer = new Peer({host: '/',port: 80,path:'/peerjs'});
+                self.peer = new Peer({host: '/',port: 27131,path:'/peerjs'});
                 this.peer.on('open', function(id) {
                     console.log(id,socket.id);
                     socket.emit('new',{name:localStorage.getItem('name'),id:id,sid:socket.id});
