@@ -62,6 +62,16 @@
                 <paper-icon-button dialog-confirm icon="chevron-right"></paper-icon-button>
             </div>
         </paper-dialog>
+
+        <paper-dialog id="accept" modal noCancelOnEscKey>
+            <div>
+                <div>You have an incoming call from: {{caller}}</div>
+            </div>
+            <div class="buttons">
+                <paper-icon-button dialog-confirm style="color-rendering: red" icon="expand-more"></paper-icon-button>
+                <paper-icon-button dialog-confirm style="color: green" icon="expand-more"></paper-icon-button>
+            </div>
+        </paper-dialog>
     </template>
 
     <script>
@@ -92,24 +102,26 @@
                 if (!localStorage.getItem('name')) this.$.nick.open(); else this.setup();
 
                 this.peer.on('call', function (call) {
-                    navigator.getUserMedia({video: true, audio: true}, function (stream) {
-                        call.answer(stream); // Answer the call with an A/V stream.
-                        var lvideo = document.querySelector('#local');
-                        lvideo.src = window.URL.createObjectURL(stream);
-                        lvideo.onloadedmetadata = function (e) {
-                            lvideo.play();
-                        };
-                        call.on('stream', function (remoteStream) {
-                            var video = document.querySelector('#remote');
-                            video.src = window.URL.createObjectURL(remoteStream);
-                            video.onloadedmetadata = function (e) {
-                                video.play();
+                    if(confirm("Pick up incoming call.")) {
+                        navigator.getUserMedia({video: true, audio: true}, function (stream) {
+                            call.answer(stream); // Answer the call with an A/V stream.
+                            var lvideo = document.querySelector('#local');
+                            lvideo.src = window.URL.createObjectURL(stream);
+                            lvideo.onloadedmetadata = function (e) {
+                                lvideo.play();
                             };
+                            call.on('stream', function (remoteStream) {
+                                var video = document.querySelector('#remote');
+                                video.src = window.URL.createObjectURL(remoteStream);
+                                video.onloadedmetadata = function (e) {
+                                    video.play();
+                                };
+                            });
+                        }, function (err) {
+                            console.log('Failed to get local stream', err);
+                            alert(err);
                         });
-                    }, function (err) {
-                        console.log('Failed to get local stream', err);
-                        alert(err);
-                    });
+                    }
                 });
 
                 socket.on('peers',function(peers){
