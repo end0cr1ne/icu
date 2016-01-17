@@ -133,7 +133,6 @@
                     this.$.nick.open();
             },
             call: function(e){
-                console.log(e);
                 var self=this;
                 navigator.getUserMedia({video: true, audio: true}, function (stream) {
                     var call = self.peer.call(e.target.dataId, stream);
