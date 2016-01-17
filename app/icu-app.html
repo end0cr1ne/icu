@@ -79,21 +79,17 @@
                 }
             },
             ready: function () {
-                if (!localStorage.getItem('name')) {
-                    this.$.nick.open();
-                }
                 var socket = io.connect();
                 var self = this;
                 this.peers=[];
+                this.socket=socket;
 
                 socket.on('setup',function(port){
                     console.log(port,location.port);
                 });
-                self.peer = new Peer({host: '/',port: location.port,path:'/peerjs'});
-                this.peer.on('open', function(id) {
-                    console.log(id,socket.id);
-                    socket.emit('new',{name:localStorage.getItem('name'),id:id,sid:socket.id});
-                });
+                this.peer = new Peer({host: '/',port: location.port,path:'/peerjs',debug:1});
+
+                if (!localStorage.getItem('name')) this.$.nick.open(); else this.setup();
 
                 this.peer.on('call', function (call) {
                     navigator.getUserMedia({video: true, audio: true}, function (stream) {
@@ -126,8 +122,13 @@
             },
             nick: function () {
                 var nick = this.$.nickname.value;
-                if (nick)
+                if (nick) {
                     localStorage.setItem('name', nick);
+                    var self = this;
+                    console.dir(self);
+                        console.log(this.peer.id,self.socket.id);
+                        self.socket.emit('new',{name:localStorage.getItem('name'),id:this.peer.id,sid:self.socket.id});
+                }
                 else
                     this.$.nick.open();
             },
@@ -151,6 +152,13 @@
                 }, function (err) {
                     console.log('Failed to get local stream', err);
                     alert(err);
+                });
+            },
+            setup: function(){
+                var self = this;
+                this.peer.on('open', function(id) {
+                    console.log(id,self.socket.id);
+                    self.socket.emit('new',{name:localStorage.getItem('name'),id:id,sid:self.socket.id});
                 });
             }
         });
