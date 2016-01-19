@@ -17905,7 +17905,7 @@ Custom property | Description | Default
                 socket.on('setup',function(port){
                     console.log(port,location.port);
                 });
-                this.peer = new Peer({host: '/',port: location.port,path:'/peerjs',debug:1});
+                this.peer = new Peer({host: '/',port: location.port,path:'/peerjs',debug:3});
 
                 if (!localStorage.getItem('name')) this.$.nick.open(); else this.setup();
 
