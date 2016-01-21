@@ -134,7 +134,7 @@
                     console.log(self.peers);
                 });
 
-                peer.on('disconnected', function(){
+                this.peer.on('disconnected', function(){
                     self.peer.reconnect();
                 });
             },

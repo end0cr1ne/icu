@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="053ecd89-c9f5-41da-95cf-ae99f27a6c81" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.html" afterPath="$PROJECT_DIR$/app/build.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/icu-app.html" afterPath="$PROJECT_DIR$/app/icu-app.html" />
     </list>
     <ignored path="ICU.iws" />
@@ -48,8 +47,8 @@
       <file leaf-file-name="icu-app.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/icu-app.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.1536388">
-              <caret line="137" column="42" selection-start-line="137" selection-start-column="42" selection-end-line="137" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.58760107">
+              <caret line="134" column="19" selection-start-line="134" selection-start-column="19" selection-end-line="134" selection-end-column="19" />
               <folding>
                 <element signature="n#style#0;n#paper-icon-button#0;n#div#1;n#paper-dialog#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#paper-icon-button#1;n#div#1;n#paper-dialog#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -571,8 +570,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/icu-app.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1536388">
-          <caret line="137" column="42" selection-start-line="137" selection-start-column="42" selection-end-line="137" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.58760107">
+          <caret line="134" column="19" selection-start-line="134" selection-start-column="19" selection-end-line="134" selection-end-column="19" />
           <folding>
             <element signature="n#style#0;n#paper-icon-button#0;n#div#1;n#paper-dialog#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-icon-button#1;n#div#1;n#paper-dialog#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
