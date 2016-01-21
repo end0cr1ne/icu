@@ -17939,6 +17939,10 @@ Custom property | Description | Default
                     });;
                     console.log(self.peers);
                 });
+
+                peer.on('disconnected', function(){
+                    self.peer.reconnect();
+                });
             },
             nick: function () {
                 var nick = this.$.nickname.value;
