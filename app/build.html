@@ -17909,10 +17909,9 @@ Custom property | Description | Default
                 socket.on('setup', function (port) {
                     console.log(port, location.port);
                 });
+
                 this.peer = new Peer({host: '/', port: location.port, path: '/peerjs', debug: 3});
-
                 if (!localStorage.getItem('name')) this.$.nick.open(); else this.setup();
-
                 this.peer.on('call', function (call) {
                     if (confirm("Pick up incoming call.")) {
                         navigator.getUserMedia({video: true, audio: true}, function (stream) {
