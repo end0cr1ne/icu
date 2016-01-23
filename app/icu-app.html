@@ -97,6 +97,7 @@
                 var socket = io.connect();
                 var self = this;
                 this.peers = [];
+                this.last_id = null
                 this.socket = socket;
                 this.new=true;
 
@@ -139,6 +140,8 @@
                 });
 
                 this.peer.on('disconnected', function () {
+                    self.peer.id = self.last_id;
+                    self.peer._lastServerId = self.last_id;
                     self.peer.reconnect();
                 });
             },
@@ -184,6 +187,11 @@
                 this.peer.on('open', function (id) {
                     if (self.new) {
                         console.log(id, self.socket.id);
+                        if (id === null) {
+                            self.peer.id = self.last_id;
+                        } else {
+                            self.last_id = id;
+                        }
                         self.socket.emit('new', {name: localStorage.getItem('name'), id: id, sid: self.socket.id});
                         self.new=false;
                     }
