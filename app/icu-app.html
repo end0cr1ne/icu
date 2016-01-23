@@ -17,22 +17,27 @@
     <style>
         #remote {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
             height: 100%;
             box-shadow: 0px 2px 5px #888888;
-            transform: rotateY(180deg);
+            transform: translate(-50%, -50%) rotateY(180deg);
         }
 
         #local {
-            position: fixed;
-            bottom: 50px;
-            right: 50px;
-            width: 200px;
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            width: 40vmin;
             box-shadow: 0px 2px 5px #888888;
             transform: rotateY(180deg);
         }
 
+        .resizable {
+            overflow: hidden;
+            resize: both;
+            max-width: 80vmin;
+        }
     </style>
     <template>
         <paper-drawer-panel>
@@ -50,9 +55,7 @@
             <paper-header-panel main>
                 <video id="remote"></video>
                 <!--<paper-fab id="disconnect" icon="add"></paper-fab>-->
-                <paper-material class="local">
-                    <video id="local" muted></video>
-                </paper-material>
+                <video id="local" muted draggable="true" class="resizable"></video>
             </paper-header-panel>
         </paper-drawer-panel>
 
@@ -84,27 +87,28 @@
             listeners: {
                 'nick.iron-overlay-closed': 'nick'
             },
-            properties:{
-                peers:{
-                    type:Array,
-                    notify:true
+            properties: {
+                peers: {
+                    type: Array,
+                    notify: true
                 }
             },
             ready: function () {
                 var socket = io.connect();
                 var self = this;
-                this.peers=[];
-                this.socket=socket;
+                this.peers = [];
+                this.socket = socket;
+                this.new=true;
 
-                socket.on('setup',function(port){
-                    console.log(port,location.port);
+                socket.on('setup', function (port) {
+                    console.log(port, location.port);
                 });
-                this.peer = new Peer({host: '/',port: location.port,path:'/peerjs',debug:3});
+                this.peer = new Peer({host: '/', port: location.port, path: '/peerjs', debug: 3});
 
                 if (!localStorage.getItem('name')) this.$.nick.open(); else this.setup();
 
                 this.peer.on('call', function (call) {
-                    if(confirm("Pick up incoming call.")) {
+                    if (confirm("Pick up incoming call.")) {
                         navigator.getUserMedia({video: true, audio: true}, function (stream) {
                             call.answer(stream); // Answer the call with an A/V stream.
                             var lvideo = document.querySelector('#local');
@@ -126,15 +130,16 @@
                     }
                 });
 
-                socket.on('peers',function(peers){
-                    self.peers=peers.filter(function(val){
-                        if('sid' in val && val.sid.indexOf(socket.id)==-1)return true;
+                socket.on('peers', function (peers) {
+                    self.peers = peers.filter(function (val) {
+                        if ('sid' in val && val.sid.indexOf(socket.id) == -1)return true;
                         else return false;
-                    });;
+                    });
+                    ;
                     console.log(self.peers);
                 });
 
-                this.peer.on('disconnected', function(){
+                this.peer.on('disconnected', function () {
                     self.peer.reconnect();
                 });
             },
@@ -144,14 +149,18 @@
                     localStorage.setItem('name', nick);
                     var self = this;
                     console.dir(self);
-                        console.log(this.peer.id,self.socket.id);
-                        self.socket.emit('new',{name:localStorage.getItem('name'),id:this.peer.id,sid:self.socket.id});
+                    console.log(this.peer.id, self.socket.id);
+                    self.socket.emit('new', {
+                        name: localStorage.getItem('name'),
+                        id: this.peer.id,
+                        sid: self.socket.id
+                    });
                 }
                 else
                     this.$.nick.open();
             },
-            call: function(e){
-                var self=this;
+            call: function (e) {
+                var self = this;
                 navigator.getUserMedia({video: true, audio: true}, function (stream) {
                     var call = self.peer.call(e.target.dataId, stream);
                     var lvideo = document.querySelector('#local');
@@ -171,11 +180,14 @@
                     alert(err);
                 });
             },
-            setup: function(){
+            setup: function () {
                 var self = this;
-                this.peer.on('open', function(id) {
-                    console.log(id,self.socket.id);
-                    self.socket.emit('new',{name:localStorage.getItem('name'),id:id,sid:self.socket.id});
+                this.peer.on('open', function (id) {
+                    if (self.new) {
+                        console.log(id, self.socket.id);
+                        self.socket.emit('new', {name: localStorage.getItem('name'), id: id, sid: self.socket.id});
+                        self.new=false;
+                    }
                 });
             }
         });
