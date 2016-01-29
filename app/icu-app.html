@@ -44,6 +44,10 @@
             resize: both;
             max-width: 80vmin;
         }
+
+        #maintoolbar{
+            --paper-toolbar-background: rgb(63, 81, 181);
+        }
     </style>
     <template>
         <paper-drawer-panel>
@@ -59,15 +63,19 @@
             </paper-header-panel>
 
             <paper-header-panel main>
+                <paper-toolbar id="maintoolbar">
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <div class="title">I  C  U</div>
+                </paper-toolbar>
                 <video id="remote"></video>
                 <paper-fab id="disconnect" icon="expand-more"></paper-fab>
-                <video id="local" muted draggable="true" class="resizable"></video>
+                <video id="local" poster="512.png" muted draggable="true" class="resizable"></video>
             </paper-header-panel>
         </paper-drawer-panel>
 
         <paper-dialog id="nick" modal noCancelOnEscKey>
             <div>
-                <paper-input id="nickname" type="text"></paper-input>
+                <paper-input id="nickname" label="Name" required auto-validate error-message="What's your name?" type="text"></paper-input>
             </div>
             <div class="buttons">
                 <paper-icon-button dialog-confirm icon="chevron-right"></paper-icon-button>
