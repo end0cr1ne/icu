@@ -33,6 +33,12 @@
             transform: rotateY(180deg);
         }
 
+        #disconnect {
+            position: absolute;
+            left: 40%;
+            top: 90%;
+        }
+
         .resizable {
             overflow: hidden;
             resize: both;
@@ -54,7 +60,7 @@
 
             <paper-header-panel main>
                 <video id="remote"></video>
-                <!--<paper-fab id="disconnect" icon="add"></paper-fab>-->
+                <paper-fab id="disconnect" icon="expand-more"></paper-fab>
                 <video id="local" muted draggable="true" class="resizable"></video>
             </paper-header-panel>
         </paper-drawer-panel>
@@ -85,7 +91,8 @@
         Polymer({
             is: 'icu-app',
             listeners: {
-                'nick.iron-overlay-closed': 'nick'
+                'nick.iron-overlay-closed': 'nick',
+                'disconnect.tap': 'cut'
             },
             properties: {
                 peers: {
@@ -97,6 +104,7 @@
                 var socket = io.connect();
                 var self = this;
                 this.peers = [];
+                this.cal=null;
                 this.last_id = null
                 this.socket = socket;
                 this.new=true;
@@ -116,6 +124,7 @@
                             lvideo.onloadedmetadata = function (e) {
                                 lvideo.play();
                             };
+                            self.cal=call;
                             call.on('stream', function (remoteStream) {
                                 var video = document.querySelector('#remote');
                                 video.src = window.URL.createObjectURL(remoteStream);
@@ -170,6 +179,7 @@
                     lvideo.onloadedmetadata = function (e) {
                         lvideo.play();
                     };
+                    self.cal=call;
                     call.on('stream', function (remoteStream) {
                         var video = document.querySelector('#remote');
                         video.src = window.URL.createObjectURL(remoteStream);
@@ -196,6 +206,10 @@
                         self.new=false;
                     }
                 });
+            },
+            cut: function () {
+                if(this.cal != null)
+                    this.cal.close();
             }
         });
     </script>
